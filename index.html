@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <title>Stack Attack 2</title>
+    <meta name="description" content="Port para navegador do clássico Stack Attack 2 dos celulares Siemens — com controles touch, gamepad, widescreen e muitas opções." />
+    <meta name="theme-color" content="#0d0f14" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Stack Attack 2" />
+    <meta property="og:title" content="Stack Attack 2 — web port" />
+    <meta property="og:description" content="O jogo das caixas dos celulares Siemens, agora no navegador." />
+    <meta property="og:image" content="icons/og.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="icons/icon-180.png" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <main id="stage">
+        <div id="device" class="skin-none">
+          <div class="dev-top"><span class="dev-speaker"></span><span class="dev-brand">STACK·ATTACK</span></div>
+          <div id="lcd-frame"><canvas id="screen" width="101" height="80" aria-label="Tela do jogo"></canvas></div>
+          <div id="keypad" aria-label="Teclado do celular">
+            <div class="kp-row kp-soft">
+              <button class="kp kp-sk" data-act="LSK" aria-label="Tecla de função esquerda"><i></i></button>
+              <div class="kp-nav">
+                <button class="kp kp-n kp-up" data-act="U" aria-label="Cima"></button>
+                <button class="kp kp-n kp-left" data-act="L" aria-label="Esquerda"></button>
+                <button class="kp kp-n kp-ok" data-act="FIRE" aria-label="OK"></button>
+                <button class="kp kp-n kp-right" data-act="R" aria-label="Direita"></button>
+                <button class="kp kp-n kp-down" data-act="D" aria-label="Baixo"></button>
+              </div>
+              <button class="kp kp-sk" data-act="RSK" aria-label="Tecla de função direita"><i></i></button>
+            </div>
+            <div class="kp-row kp-call">
+              <button class="kp kp-green" data-act="FIRE" aria-label="Verde"><i></i></button>
+              <button class="kp kp-red" data-act="RED" aria-label="Vermelho"><i></i></button>
+            </div>
+            <div class="kp-grid">
+              <button class="kp kp-d" data-act="K1"><b>1</b><small>&nbsp;</small></button>
+              <button class="kp kp-d" data-act="K2"><b>2</b><small>abc</small></button>
+              <button class="kp kp-d" data-act="K3"><b>3</b><small>def</small></button>
+              <button class="kp kp-d" data-act="L"><b>4</b><small>ghi</small></button>
+              <button class="kp kp-d" data-act="K5"><b>5</b><small>jkl</small></button>
+              <button class="kp kp-d" data-act="R"><b>6</b><small>mno</small></button>
+              <button class="kp kp-d" data-act="K7"><b>7</b><small>pqrs</small></button>
+              <button class="kp kp-d" data-act="K8"><b>8</b><small>tuv</small></button>
+              <button class="kp kp-d" data-act="K9"><b>9</b><small>wxyz</small></button>
+              <button class="kp kp-d" data-act="STAR"><b>*</b><small>+</small></button>
+              <button class="kp kp-d" data-act="K0"><b>0</b><small>␣</small></button>
+              <button class="kp kp-d" data-act="POUND"><b>#</b><small>⇧</small></button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div id="pad" hidden>
+        <div id="dpad" class="pad-zone" aria-label="Direcional">
+          <div class="dpad-ring">
+            <span class="dp dp-u"></span><span class="dp dp-l"></span><span class="dp dp-r"></span><span class="dp dp-d"></span>
+            <span class="dpad-knob"></span>
+          </div>
+        </div>
+        <div id="pad-main" class="pad-zone">
+          <button class="pb pb-b" data-act="SUPER"><span data-lbl="b"></span></button>
+          <button class="pb pb-a" data-act="JUMP"><span data-lbl="a"></span></button>
+        </div>
+        <div id="pad-small" class="pad-zone">
+          <button class="ps" data-act="BOMB" data-lbl="bomb"></button>
+          <button class="ps" data-act="FIRE" data-lbl="ok"></button>
+          <button class="ps" data-act="PAUSE" data-lbl="pause"></button>
+        </div>
+      </div>
+
+      <div id="corner">
+        <button id="btn-menu" class="corner-btn" aria-label="Menu do port" title="Menu do port (Esc)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+        <button id="btn-fs" class="corner-btn" aria-label="Tela cheia" title="Tela cheia (F)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+        </button>
+      </div>
+      <div id="fps" hidden></div>
+      <div id="toast" role="status" aria-live="polite"></div>
+
+      <div id="splash">
+        <div class="splash-inner">
+          <img src="assets/img/logo2.png" alt="Stack Attack 2 Pro" class="splash-logo" />
+          <div class="splash-crates" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <button id="power" class="power-btn"><span class="power-ico"></span><span id="power-lbl">Ligar</span></button>
+          <p id="power-hint" class="splash-hint"></p>
+          <p id="load-status" class="splash-hint"></p>
+        </div>
+      </div>
+
+      <div id="portmenu" hidden></div>
+      <input id="textin" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="done" aria-label="Texto" />
+    </div>
+
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <filter id="pal-gb" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="0.3 0.59 0.11 0 0  0.3 0.59 0.11 0 0  0.3 0.59 0.11 0 0  0 0 0 1 0" />
+        <feComponentTransfer>
+          <feFuncR type="discrete" tableValues="0.06 0.19 0.55 0.61" />
+          <feFuncG type="discrete" tableValues="0.22 0.38 0.67 0.74" />
+          <feFuncB type="discrete" tableValues="0.06 0.19 0.06 0.06" />
+        </feComponentTransfer>
+      </filter>
+    </svg>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

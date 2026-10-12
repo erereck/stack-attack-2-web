@@ -1,0 +1,5 @@
+tools/fidelity/build/
+tools/fidelity/runs/
+tools/fidelity/trace.txt
+.DS_Store
+Thumbs.db
